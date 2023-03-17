@@ -1,5 +1,5 @@
-import gym
-import bbrl_gym
+import gymnasium as gym
+import bbrl_gymnasium
 
 
 def test_rocket_lander_v0():

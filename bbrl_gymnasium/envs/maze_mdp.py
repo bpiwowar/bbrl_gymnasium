@@ -5,9 +5,15 @@ Simple Maze MDP
 import logging
 from typing import Callable
 
-import gym
-from gym import spaces
-from gym.utils import seeding
+try:
+    # Necessary to handle action space from gym...
+    import gym as old_gym
+except:
+    pass
+
+import gymnasium as gym
+from gymnasium import spaces
+from gymnasium.utils import seeding
 
 from mazemdp import create_random_maze
 from mazemdp.maze import build_maze
@@ -16,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 class MazeMDPEnv(gym.Env):
-    metadata = {"render.modes": ["rgb_array", "human"], "video.frames_per_second": 5}
+    metadata = {"render_modes": ["rgb_array", "human"], "video.frames_per_second": 5}
 
     def __init__(self, **kwargs):
         if kwargs == {}:
@@ -79,7 +85,10 @@ class MazeMDPEnv(gym.Env):
         return self.mdp.step(action)
 
     def reset(self, **kwargs):
-        return self.mdp.reset(**kwargs)
+        r = self.mdp.reset(**kwargs)
+        if isinstance(r, list):
+            return r
+        return self.mdp.reset(**kwargs), {}
 
     # Drawing functions
     def draw_v_pi_a(self, v, policy, agent_pos, title="MDP studies", mode="legacy"):

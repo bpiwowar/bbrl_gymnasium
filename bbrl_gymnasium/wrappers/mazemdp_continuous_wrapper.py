@@ -1,4 +1,5 @@
-import gym
+from typing import Any, Dict
+import gymnasium as gym
 import random
 import numpy as np
 
@@ -31,8 +32,8 @@ class MazeMDPContinuousWrapper(gym.Wrapper):
         # By contrast with the wrapped environment where the state space is discrete
         return True
 
-    def reset(self):
-        return self.env.reset()
+    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
+        return self.env.reset(), {}
 
     def step(self, action):
         # Turn the discrete state into a pair of continuous coordinates
@@ -44,4 +45,4 @@ class MazeMDPContinuousWrapper(gym.Wrapper):
         xc = x + random.random()
         yc = y + random.random()
         next_continuous = [xc, yc]
-        return next_continuous, reward, done, info
+        return next_continuous, reward, done, False, {}

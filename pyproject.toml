@@ -1,2 +1,2 @@
 [tool.setuptools_scm]
-write_to = "bbrl_gym/_version.py"
+write_to = "bbrl_gymnasium/_version.py"

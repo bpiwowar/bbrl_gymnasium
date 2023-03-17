@@ -1,3 +1,5 @@
+from typing import Any, Dict, Optional
+
 import numpy as np
 import Box2D
 from Box2D.b2 import (
@@ -9,9 +11,9 @@ from Box2D.b2 import (
     distanceJointDef,
     contactListener,
 )
-import gym
-from gym import spaces
-from gym.utils import seeding
+import gymnasium as gym
+from gymnasium import spaces
+from gymnasium.utils import seeding
 
 """
 
@@ -122,7 +124,7 @@ class ContactDetector(contactListener):
 
 
 class RocketLanderEnv(gym.Env):
-    metadata = {"render.modes": ["human", "rgb_array"], "video.frames_per_second": FPS}
+    metadata = {"render_modes": ["human", "rgb_array"], "video.frames_per_second": FPS}
 
     def __init__(self):
         self._seed()
@@ -172,7 +174,8 @@ class RocketLanderEnv(gym.Env):
         self.world.DestroyBody(self.containers[1])
         self.containers = []
 
-    def reset(self):
+    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
+
         self._destroy()
         self.world.contactListener_keepref = ContactDetector(self)
         self.world.contactListener = self.world.contactListener_keepref
@@ -354,9 +357,9 @@ class RocketLanderEnv(gym.Env):
         )
 
         if CONTINUOUS:
-            return self.step([0, 0, 0])[0]
+            return self.step([0, 0, 0])[0], {}
         else:
-            return self.step(6)[0]
+            return self.step(6)[0], {}
 
     def set_force_and_throttle(self, action):
 
@@ -494,7 +497,7 @@ class RocketLanderEnv(gym.Env):
                 self.viewer = None
             return
 
-        from gym.envs.classic_control import rendering
+        from gymnasium.envs.classic_control import rendering
 
         if self.viewer is None:
 

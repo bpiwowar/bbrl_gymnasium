@@ -1,4 +1,4 @@
 *.egg-info
 __pycache__
 dist/
-bbrl_gym/_version.py
+bbrl_gymnasium/_version.py

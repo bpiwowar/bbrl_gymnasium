@@ -1,4 +1,4 @@
-import gym
+import gymnasium as gym
 
 
 class RocketLanderWrapper(gym.Wrapper):
@@ -7,12 +7,13 @@ class RocketLanderWrapper(gym.Wrapper):
     """
 
     def __init__(self, env):
-        super(RocketLanderWrapper, self).__init__(env)
+        super().__init__(env)
         self.prev_shaping = None
 
-    def reset(self):
+    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
+
         self.prev_shaping = None
-        return self.env.reset()
+        return self.env.reset(), {}
 
     def step(self, action):
         next_state, reward, done, info = self.env.step(action)
@@ -25,4 +26,4 @@ class RocketLanderWrapper(gym.Wrapper):
             reward += shaping - self.prev_shaping
         self.prev_shaping = shaping
 
-        return next_state, reward, done, info
+        return next_state, reward, done, False, info

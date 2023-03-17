@@ -5,11 +5,12 @@ The agent starts at 0.01 and gets a reward of 1 for any movement, until it moves
 """
 
 import logging
+from typing import Any, Dict, Optional
 
-import gym
+import gymnasium as gym
 import numpy as np
 from gym import spaces
-from gym.utils import seeding
+from gymnasium.utils import seeding
 
 logger = logging.getLogger(__name__)
 
@@ -39,11 +40,12 @@ class DebugVEnv(gym.Env):
         if self.state >= 1:
             done = True
         next_state = np.array([self.state])
-        return next_state, reward, done, {}
+        return next_state, reward, done, False, {}
 
-    def reset(self):
+    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
+
         self.state = 0.01
-        return np.array([self.state])
+        return np.array([self.state]), {}
 
     def render(self, mode="human", close=False):
         if close:
@@ -55,7 +57,7 @@ class DebugVEnv(gym.Env):
         screen_height = 400
 
         if self.viewer is None:
-            from gym.envs.classic_control import rendering
+            from gymnasium.envs.classic_control import rendering
 
             self.viewer = rendering.Viewer(screen_width, screen_height)
         print("Nothing to show")

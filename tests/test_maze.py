@@ -1,10 +1,10 @@
-import gym
-import bbrl_gym
+import gymnasium as gym
+import bbrl_gymnasium
 import numpy as np
 from typing import Tuple, List
 
 
-from bbrl_gym.envs.maze_mdp import MazeMDPEnv
+from bbrl_gymnasium.envs.maze_mdp import MazeMDPEnv
 
 
 def get_policy_from_v(mdp: MazeMDPEnv, v: np.ndarray) -> np.ndarray:
@@ -14,7 +14,7 @@ def get_policy_from_v(mdp: MazeMDPEnv, v: np.ndarray) -> np.ndarray:
         # Compute the value of the state x for each action u of the MDP action space
         v_temp = []
         if x not in mdp.terminal_states:
-            for u in mdp.action_space.actions:
+            for u in range(mdp.action_space.start, mdp.action_space.start + mdp.action_space.n):
                 # Process sum of the values of the neighbouring states
                 summ = 0
                 for y in range(mdp.nb_states):
@@ -26,15 +26,12 @@ def get_policy_from_v(mdp: MazeMDPEnv, v: np.ndarray) -> np.ndarray:
 
 # ------------------------- Value Iteration with the V function ----------------------------#
 def value_iteration_v(
-    mdp: MazeMDPEnv, render: bool = True
+    mdp: MazeMDPEnv, render: bool
 ) -> Tuple[np.ndarray, List[float]]:
     # Value Iteration using the state value v
     v = np.zeros(mdp.nb_states)  # initial state values are set to 0
     v_list = []
     stop = False
-
-    if render:
-        mdp.init_draw("Value iteration V", mode="rgb_array")
 
     while not stop:
         v_old = v.copy()
@@ -45,7 +42,7 @@ def value_iteration_v(
             # Compute the value of the state x for each action u of the MDP action space
             if x not in mdp.terminal_states:
                 v_temp = []
-                for u in mdp.action_space.actions:
+                for u in range(mdp.action_space.start, mdp.action_space.start + mdp.action_space.n):
                     # Process sum of the values of the neighbouring states
                     summ = 0
                     for y in range(mdp.nb_states):
@@ -68,7 +65,7 @@ def value_iteration_v(
 
 
 def test_mazemdp_v0():
-    env = gym.make("MazeMDP-v0", kwargs={"width": 6, "height": 5, "ratio": 0.2})
+    env = gym.make("MazeMDP-v0", kwargs={"width": 6, "height": 5, "ratio": 0.2}, render="rgba")
     env.reset()
     # env.set_no_agent()
     v, v_list = value_iteration_v(env, render=True)

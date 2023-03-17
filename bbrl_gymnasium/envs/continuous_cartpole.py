@@ -4,11 +4,12 @@ Continuous action version of the classic cart-pole system implemented by Rich Su
 
 import logging
 import math
+from typing import Any, Dict, Optional
 
-import gym
+import gymnasium as gym
 import numpy as np
-from gym import spaces
-from gym.utils import seeding
+from gymnasium import spaces
+from gymnasium.utils import seeding
 
 logger = logging.getLogger(__name__)
 
@@ -100,10 +101,11 @@ class ContinuousCartPoleEnv(gym.Env):
         next_state = np.array(self.state)
         return next_state, reward, done, {}
 
-    def reset(self):
+    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
+
         self.state = self.np_random.uniform(low=-0.05, high=0.05, size=(4,))
         self.steps_beyond_done = None
-        return self.state
+        return self.state, {}
 
     def render(self, mode="human", close=False):
         if close:
@@ -124,7 +126,7 @@ class ContinuousCartPoleEnv(gym.Env):
         cartheight = 30.0
 
         if self.viewer is None:
-            from gym.envs.classic_control import rendering
+            from gymnasium.envs.classic_control import rendering
 
             self.viewer = rendering.Viewer(screen_width, screen_height)
             l, r, t, b = -cartwidth / 2, cartwidth / 2, cartheight / 2, -cartheight / 2

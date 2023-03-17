@@ -1,23 +1,23 @@
 """
-Simple MDP where the state is a pair of real numbers: One in [0,1] and the second is set 0.5
-The agent can perform 2 actions (left or right) which increase or decrease the state of 0.2
+Simple MDP where the state is a real number in [0,1] and 2 actions (left or right) increase or decrease the state of 0.2
 The agent gets a reward of 10 if it reaches 1 and a reward of 2 if it reaches 0.
 """
 
 import logging
+from typing import Any, Dict, Optional
 
-import gym
+import gymnasium as gym
 import numpy as np
-from gym import spaces
-from gym.utils import seeding
+from gymnasium import spaces
+from gymnasium.utils import seeding
 
 logger = logging.getLogger(__name__)
 
 
-class Continuous2DMDPEnv(gym.Env):
+class ContinuousLineMDPEnv(gym.Env):
     def __init__(self):
         self.action_space = spaces.Discrete(2)
-        self.observation_space = spaces.Box(np.array([0, 0]), np.array([1, 1]))
+        self.observation_space = spaces.Box(np.array([0]), np.array([1]))
 
         self.seed()
         self.viewer = None
@@ -34,13 +34,13 @@ class Continuous2DMDPEnv(gym.Env):
         done = False
         reward = 0.0
         if action == 0:
-            self.state[0] += 0.2
-            if self.state[0] >= 1:
+            self.state += 0.2
+            if self.state >= 1:
                 done = True
                 reward = 10.0
         else:
-            self.state[0] -= 0.2
-            if self.state[0] < 0:
+            self.state -= 0.2
+            if self.state < 0:
                 done = True
                 reward = 2.0
 
@@ -56,13 +56,14 @@ class Continuous2DMDPEnv(gym.Env):
                     "any further steps are undefined behavior."
                 )
                 self.steps_beyond_done += 1
-        next_state = np.array(self.state)
-        return next_state, reward, done, {}
+        next_state = np.array([self.state])
+        return next_state, reward, done, False, {}
 
-    def reset(self):
-        self.state = [0.4, 0.5]
+    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
+
+        self.state = 0.4
         self.steps_beyond_done = None
-        return self.state
+        return np.array([self.state]), {}
 
     def render(self, mode="human", close=False):
         if close:
@@ -74,7 +75,7 @@ class Continuous2DMDPEnv(gym.Env):
         screen_height = 400
 
         if self.viewer is None:
-            from gym.envs.classic_control import rendering
+            from gymnasium.envs.classic_control import rendering
 
             self.viewer = rendering.Viewer(screen_width, screen_height)
         print("Nothing to show")
