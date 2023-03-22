@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name="bbrl_gym",
+    name="bbrl_gymnasium",
     packages=[package for package in find_packages() if package.startswith("my_gym") or package.startswith("bbrl_gym")],
     url="https://github.com/osigaud/my_gym",
     tests_require=["pytest==4.4.1"],

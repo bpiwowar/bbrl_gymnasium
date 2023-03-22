@@ -1,5 +1,5 @@
 numpy>=1.19.1
-gymnasium == 0.27
+gymnasium ~= 0.27
 swig
 box2d-py
 mazemdp>=0.7.3

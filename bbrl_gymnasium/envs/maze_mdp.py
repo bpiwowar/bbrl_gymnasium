@@ -2,8 +2,11 @@
 Simple Maze MDP
 """
 
+from functools import partial
 import logging
 from typing import Callable
+
+import numpy as np
 
 try:
     # Necessary to handle action space from gym...
@@ -24,7 +27,9 @@ logger = logging.getLogger(__name__)
 class MazeMDPEnv(gym.Env):
     metadata = {"render_modes": ["rgb_array", "human"], "video.frames_per_second": 5}
 
-    def __init__(self, **kwargs):
+    def __init__(self, render_mode=None, **kwargs):
+        self.render_mode = render_mode
+
         if kwargs == {}:
             width = 10
             height = 10
@@ -61,34 +66,28 @@ class MazeMDPEnv(gym.Env):
         self.np_random = None
         self.title = f"Simple maze {width}x{height}"
 
-        self.set_render_func(self.init_draw, lambda draw: draw(self.title))
+        self.set_render_func(partial(self.init_draw, self.title))
 
     def set_title(self, title):
         self.title = title
 
-    def set_render_func(self, render_func: Callable, callable: Callable):
+    def set_render_func(self, render_func: Callable):
         """Sets the render mode"""
-
-        def call(mode: str):
-            def draw(*args, **kwargs):
-                return render_func(*args, **kwargs, mode=mode)
-
-            return callable(draw)
-
-        self.render_func = call
+        self.render_func = partial(render_func, mode=self.render_mode)
 
     def seed(self, seed=None):
         self.np_random, seed = seeding.np_random(seed)
         return [seed]
 
     def step(self, action):
-        return self.mdp.step(action)
+        next_state, reward, done, info = self.mdp.step(action)
+        return next_state, reward, done, False, info
 
     def reset(self, **kwargs):
         r = self.mdp.reset(**kwargs)
         if isinstance(r, list):
             return r
-        return self.mdp.reset(**kwargs), {}
+        return self.mdp.reset(**kwargs)
 
     # Drawing functions
     def draw_v_pi_a(self, v, policy, agent_pos, title="MDP studies", mode="legacy"):
@@ -111,9 +110,9 @@ class MazeMDPEnv(gym.Env):
     def init_draw(self, title, mode="legacy"):
         return self.mdp.new_render(title, mode=mode)
 
-    def render(self, mode="human"):
-        r = self.render_func(mode)
-        return r
+    def render(self):
+        render_return = self.render_func()
+        return render_return
 
     def set_no_agent(self):
         self.mdp.has_state = False
