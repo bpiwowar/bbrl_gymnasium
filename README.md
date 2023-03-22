@@ -1,4 +1,4 @@
-The my_gym library is the place where I put additional gym-like environments.
+The bbrl_gymnasium library is the place where I put additional gym-like environments.
 
 So far, it contains the following environments:
 - CartPoleContinuous-v0 (with timit limit = 200 steps)
@@ -9,20 +9,18 @@ So far, it contains the following environments:
 - LineMDPContinuous-v0, a simple discrete action MDP
 - 2DMDPContinuous-v0, a discrete action MDP with 2D state
 
-Besides, the gym version is forced to 0.21.0 to avoid the large changes that have appeared after version 0.22
-
 
 ## Installation
 
 ```
-pip install -e .
+pip install bbrl_gymnasium
 ```
 
 ## Use it
 
 ```
-import gym
-import my_gym
+import gymnasium as gym
+import bbrl_gymnasium
 
 env = gym.make("CartPoleContinuous-v0")  # or -v1 or any other and then use your environment as usual
 ```
