@@ -2,3 +2,5 @@
 __pycache__
 dist/
 bbrl_gymnasium/_version.py
+.eggs
+build/

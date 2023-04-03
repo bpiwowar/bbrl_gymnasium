@@ -71,9 +71,9 @@ class MazeMDPEnv(gym.Env):
     def set_title(self, title):
         self.title = title
 
-    def set_render_func(self, render_func: Callable):
+    def set_render_func(self, render_func: Callable, *args, **kwargs):
         """Sets the render mode"""
-        self.render_func = partial(render_func, mode=self.render_mode)
+        self.render_func = partial(render_func, *args, **kwargs, mode=self.render_mode)
 
     def seed(self, seed=None):
         self.np_random, seed = seeding.np_random(seed)
@@ -87,7 +87,7 @@ class MazeMDPEnv(gym.Env):
         r = self.mdp.reset(**kwargs)
         if isinstance(r, list):
             return r
-        return self.mdp.reset(**kwargs)
+        return self.mdp.reset(**kwargs), {}
 
     # Drawing functions
     def draw_v_pi_a(self, v, policy, agent_pos, title="MDP studies", mode="legacy"):
@@ -98,9 +98,7 @@ class MazeMDPEnv(gym.Env):
         return self.mdp.render(v, policy, agent_pos, title, mode=mode)
 
     def draw_v(self, v, mode="legacy", title="MDP studies"):
-        policy = None
-        agent_pos = None
-        return self.mdp.render(v, policy, agent_pos, title, mode=mode)
+        return self.mdp.render(v, None, None, title, mode=mode)
 
     def draw_pi(self, policy, title="MDP studies", mode="legacy"):
         v = None
@@ -111,8 +109,11 @@ class MazeMDPEnv(gym.Env):
         return self.mdp.new_render(title, mode=mode)
 
     def render(self):
-        render_return = self.render_func()
-        return render_return
+        return self.render_func(mode=self.render_mode)
+
+    def render_mdp(self, func, *args, **kwargs):
+        self.set_render_func = partial(func, *args, **kwargs)
+        self.render()
 
     def set_no_agent(self):
         self.mdp.has_state = False
