@@ -99,7 +99,7 @@ class ContinuousCartPoleEnv(gym.Env):
             self.steps_beyond_done += 1
             reward = 0.0
         next_state = np.array(self.state)
-        return next_state, reward, done, {}
+        return next_state, reward, done, False, {}
 
     def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
 
