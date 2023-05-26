@@ -9,7 +9,7 @@ from typing import Any, Dict, Optional
 
 import gymnasium as gym
 import numpy as np
-from gym import spaces
+from gymnasium import spaces
 from gymnasium.utils import seeding
 
 logger = logging.getLogger(__name__)

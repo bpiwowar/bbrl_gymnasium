@@ -6,14 +6,6 @@ from functools import partial
 import logging
 from typing import Callable
 
-import numpy as np
-
-try:
-    # Necessary to handle action space from gym...
-    import gym as old_gym
-except:
-    pass
-
 import gymnasium as gym
 from gymnasium import spaces
 from gymnasium.utils import seeding
