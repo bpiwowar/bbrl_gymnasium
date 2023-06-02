@@ -65,7 +65,8 @@ class MazeMDPEnv(gym.Env):
 
     def set_render_func(self, render_func: Callable, *args, **kwargs):
         """Sets the render mode"""
-        self.render_func = partial(render_func, *args, **kwargs, mode=self.render_mode)
+        kwargs = {**kwargs, "mode": self.render_mode}
+        self.render_func = partial(render_func, *args, **kwargs)
 
     def seed(self, seed=None):
         self.np_random, seed = seeding.np_random(seed)
@@ -81,24 +82,33 @@ class MazeMDPEnv(gym.Env):
             return r
         return self.mdp.reset(**kwargs), {}
 
+    def _draw(self, recorder, callable, *args, **kwargs):
+        """Draw and record 
+
+        :param recorder: A video recorder (or None)
+        """
+        if recorder is not None:
+            if recorder.enabled:
+                self.set_render_func(callable, *args, **kwargs)
+                recorder.capture_frame()
+        else:
+            return callable(*args, **kwargs)
+
     # Drawing functions
-    def draw_v_pi_a(self, v, policy, agent_pos, title="MDP studies", mode="legacy"):
-        return self.mdp.render(v, policy, agent_pos, title, mode=mode)
+    def draw_v_pi_a(self, v, policy, agent_pos, title="MDP studies", mode="legacy", recorder=None):
+        return self._draw(recorder, self.render, v, policy, agent_pos, title=title, mode=mode)
 
-    def draw_v_pi(self, v, policy, title="MDP studies", mode="legacy"):
-        agent_pos = None
-        return self.mdp.render(v, policy, agent_pos, title, mode=mode)
+    def draw_v_pi(self, v, policy, title="MDP studies", mode="legacy", recorder=None):
+        return self._draw(recorder, self.mdp.render, v, policy, None, title, mode=mode)
 
-    def draw_v(self, v, mode="legacy", title="MDP studies"):
-        return self.mdp.render(v, None, None, title, mode=mode)
+    def draw_v(self, v, mode="legacy", title="MDP studies", recorder=None):
+        return self._draw(recorder, self.mdp.render, v, None, None, title, mode=mode)
 
-    def draw_pi(self, policy, title="MDP studies", mode="legacy"):
-        v = None
-        agent_pos = None
-        return self.mdp.render(v, policy, agent_pos, title, mode=mode)
+    def draw_pi(self, policy, title="MDP studies", mode="legacy", recorder=None):
+        return self._draw(recorder, self.mdp.render, None, policy, None, title, mode=mode)
 
-    def init_draw(self, title, mode="legacy"):
-        return self.mdp.new_render(title, mode=mode)
+    def init_draw(self, title, mode="legacy", recorder=None):
+        return self._draw(recorder, self.mdp.new_render, title, mode=mode)
 
     def render(self):
         return self.render_func(mode=self.render_mode)
