@@ -29,5 +29,18 @@ register(
     max_episode_steps=1000,
     reward_threshold=0,
 )
-register(id="MazeMDP-v0", entry_point="bbrl_gymnasium.envs:MazeMDPEnv", max_episode_steps=1000)
-register(id="DebugV-v0", entry_point="bbrl_gymnasium.envs:DebugVEnv", max_episode_steps=10)
+register(
+    id="MazeMDP-v0",
+    entry_point="bbrl_gymnasium.envs:MazeMDPEnv",
+    max_episode_steps=1000
+)
+register(
+    id="DebugV-v0",
+    entry_point="bbrl_gymnasium.envs:DebugVEnv",
+    max_episode_steps=10
+)
+register(
+    id="SingleStateMDP-v0",
+    entry_point="bbrl_gymnasium.envs:SingleStateMDP",
+    max_episode_steps=3000
+)
