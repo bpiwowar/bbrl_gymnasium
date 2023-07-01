@@ -27,11 +27,15 @@ class SingleStateMDP(gym.Env):
         reward = self._mean_reward(action) + self.rng.normal(0, self.sigma)
         reward = reward.item()
         next_state = 0
-        return next_state, reward, True, {}
+        return next_state, reward, False, False, {}
 
-    def reset(self):
+    def seed(self, seed=None):
+        self.np_random, seed = seeding.np_random(seed)
+        return [seed]
+
+    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
         self.state = 0
-        return self.state
+        return self.state, {}
 
     def render(self, mode="human"):
         pass
