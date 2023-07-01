@@ -1,6 +1,6 @@
 import numpy as np
 from gymnasium import spaces
-
+import gymnasium as gym
 
 class SingleStateMDP(gym.Env):
     def __init__(self, A0=0.3, A1=0.9, nu=5, sigma=0.25, seed=None):
