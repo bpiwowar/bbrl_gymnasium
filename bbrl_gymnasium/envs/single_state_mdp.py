@@ -33,7 +33,7 @@ class SingleStateMDP(gym.Env):
         return A * np.sin(self.nu * action)
 
     def step(self, action):
-        reward = self._mean_reward(action) + self.rng.normal(0, self.sigma)
+        reward = self._mean_reward(action) + self.np_random.normal(0, self.sigma)
         reward = reward.item()
         next_state = np.zeros(1)
         return next_state, reward, False, False, {}
