@@ -44,7 +44,7 @@ class SingleStateMDP(gym.Env):
 
     def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
         self.state = np.zeros(1)
-        return self.state], {}
+        return self.state, {}
 
     def render(self, mode="human"):
         pass
