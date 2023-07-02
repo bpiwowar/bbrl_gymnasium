@@ -14,7 +14,7 @@ class SingleStateMDP(gym.Env):
         self.action_space = spaces.Box(-1, 1, shape=(1,), dtype=np.float32)
         self.observation_space = spaces.Discrete(1)
 
-        self.state = 0
+        self.state = np.zeros(1)
 
         self.A0 = A0
         self.A1 = A1
@@ -43,8 +43,8 @@ class SingleStateMDP(gym.Env):
         return [seed]
 
     def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
-        self.state = 0
-        return np.array([self.state]), {}
+        self.state = np.zeros(1)
+        return self.state], {}
 
     def render(self, mode="human"):
         pass
