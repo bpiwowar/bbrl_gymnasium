@@ -1,7 +1,13 @@
+import logging
 from typing import Any, Dict, Optional
+
 import numpy as np
 from gymnasium import spaces
 import gymnasium as gym
+from gymnasium.utils import seeding
+
+logger = logging.getLogger(__name__)
+
 
 class SingleStateMDP(gym.Env):
     def __init__(self, A0=0.3, A1=0.9, nu=5, sigma=0.25, seed=None):
@@ -15,10 +21,12 @@ class SingleStateMDP(gym.Env):
         self.nu = nu
         self.sigma = sigma
 
-        if seed is not None:
-            self.rng = np.random.default_rng(seed)
-        else:
-            self.rng = np.random.default_rng()
+        self.seed()
+        self.viewer = None
+        self.state = None
+        self.np_random = None
+
+        self.steps_beyond_done = None
 
     def _mean_reward(self, action):
         A = self.A0 + (self.A1 - self.A0) * (action + 1) * 0.5
@@ -27,7 +35,7 @@ class SingleStateMDP(gym.Env):
     def step(self, action):
         reward = self._mean_reward(action) + self.rng.normal(0, self.sigma)
         reward = reward.item()
-        next_state = 0
+        next_state = np.zeros(1)
         return next_state, reward, False, False, {}
 
     def seed(self, seed=None):
@@ -36,7 +44,7 @@ class SingleStateMDP(gym.Env):
 
     def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
         self.state = 0
-        return self.state, {}
+        return np.array([self.state]), {}
 
     def render(self, mode="human"):
         pass
