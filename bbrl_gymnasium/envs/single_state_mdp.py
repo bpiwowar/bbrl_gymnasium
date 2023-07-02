@@ -16,7 +16,7 @@ class SingleStateMDP(gym.Env):
             np.array([0.0]), np.array([0.0]), dtype=np.float32
         )
 
-        self.state = np.zeros(1)
+        self.state = np.zeros(1, dtype=np.float32)
 
         self.A0 = A0
         self.A1 = A1
@@ -37,7 +37,7 @@ class SingleStateMDP(gym.Env):
     def step(self, action):
         reward = self._mean_reward(action) + self.np_random.normal(0, self.sigma)
         reward = reward.item()
-        next_state = np.zeros(1)
+        next_state = np.zeros(1, dtype=np.float32)
         return next_state, reward, False, False, {}
 
     def seed(self, seed=None):
@@ -45,7 +45,7 @@ class SingleStateMDP(gym.Env):
         return [seed]
 
     def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
-        self.state = np.zeros(1)
+        self.state = np.zeros(1, dtype=np.float32)
         return self.state, {}
 
     def render(self, mode="human"):
