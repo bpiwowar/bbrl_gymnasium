@@ -12,7 +12,9 @@ logger = logging.getLogger(__name__)
 class SingleStateMDP(gym.Env):
     def __init__(self, A0=0.3, A1=0.9, nu=5, sigma=0.25, seed=None):
         self.action_space = spaces.Box(-1, 1, shape=(1,), dtype=np.float32)
-        self.observation_space = spaces.Discrete(1)
+        self.observation_space = spaces.Box(
+            np.array([0.0]), np.array([0.0]), dtype=np.float32
+        )
 
         self.state = np.zeros(1)
 
