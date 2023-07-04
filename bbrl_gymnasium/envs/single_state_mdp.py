@@ -37,7 +37,7 @@ class SingleStateMDP(gym.Env):
     def step(self, action):
         reward = self._mean_reward(action) + self.np_random.normal(0, self.sigma)
         reward = reward.item()
-        next_state = np.zeros(1, dtype=np.float32)
+        next_state = np.zeros(1, dtype=np.float64)
         return next_state, reward, False, False, {}
 
     def seed(self, seed=None):
