@@ -11,12 +11,12 @@ logger = logging.getLogger(__name__)
 
 class SingleStateMDP(gym.Env):
     def __init__(self, A0=0.3, A1=0.9, nu=5, sigma=0.25, seed=None):
-        self.action_space = spaces.Box(-1, 1, shape=(1,), dtype=np.float32)
+        self.action_space = spaces.Box(-1, 1, shape=(1,), dtype=np.float64)
         self.observation_space = spaces.Box(
-            np.array([0.0]), np.array([0.0]), dtype=np.float32
+            np.array([0.0]), np.array([1e-10]), dtype=np.float64
         )
 
-        self.state = np.zeros(1, dtype=np.float32)
+        self.state = np.zeros(1, dtype=np.float64)
 
         self.A0 = A0
         self.A1 = A1
@@ -45,7 +45,7 @@ class SingleStateMDP(gym.Env):
         return [seed]
 
     def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
-        self.state = np.zeros(1, dtype=np.float32)
+        self.state = np.zeros(1, dtype=np.float64)
         return self.state, {}
 
     def render(self, mode="human"):
