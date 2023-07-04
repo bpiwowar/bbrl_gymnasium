@@ -1,5 +1,4 @@
 numpy>=1.19.1
 gymnasium
 gymnasium[box2d]
-git+https://github.com/arlaz/TabularMazeMDP/src/mazemdp
-# mazemdp>=0.8.1
+mazemdp>=0.8.1
