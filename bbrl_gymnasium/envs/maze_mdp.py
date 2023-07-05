@@ -10,8 +10,8 @@ import gymnasium as gym
 from gymnasium import spaces
 from gymnasium.utils import seeding
 
-from mazemdp import create_random_maze
-from mazemdp.maze import build_maze
+from tabularmazemdp import create_random_maze
+from tabularmazemdp.maze import build_maze
 
 logger = logging.getLogger(__name__)
 
