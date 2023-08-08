@@ -8,6 +8,7 @@ So far, it contains the following environments:
 - LineMDP-v0, a simple discrete state and action MDP
 - LineMDPContinuous-v0, a simple discrete action MDP
 - 2DMDPContinuous-v0, a discrete action MDP with 2D state
+- PendulumEnv-v0, a version of the Pendulum environment with friction
 
 
 ## Installation
