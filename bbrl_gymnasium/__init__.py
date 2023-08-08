@@ -44,3 +44,8 @@ register(
     entry_point="bbrl_gymnasium.envs:SingleStateMDP",
     max_episode_steps=3000
 )
+register(
+    id="PendulumEnv-v0",
+    entry_point="bbrl_gymnasium.envs:PendulumEnv",
+    max_episode_steps=200
+)

@@ -6,3 +6,4 @@ from bbrl_gymnasium.envs.rocket_lander import RocketLanderEnv
 from bbrl_gymnasium.envs.maze_mdp import MazeMDPEnv
 from bbrl_gymnasium.envs.debug_env import DebugVEnv
 from bbrl_gymnasium.envs.single_state_mdp import SingleStateMDP
+from bbrl_gymnasium.envs.pendulum_frottements import PendulumEnv
