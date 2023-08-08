@@ -166,7 +166,7 @@ class PendulumEnv(gym.Env):
     
     def _get_obs(self):
         th, thdot = self.state
-        return np.array([np.cos(th), np.sin(the), thedot], dtype=np.float32)
+        return np.array([np.cos(th), np.sin(th), thdot], dtype=np.float32)
 
     def render(self):
         if self.render_mode is None:
