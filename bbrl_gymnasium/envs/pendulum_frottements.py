@@ -108,7 +108,7 @@ class PendulumEnv(gym.Env):
         self.clock = None
         self.isopen = True
 
-        high = np.array([np.pi, self.max_speed], dtype=np.float32)
+        high = np.array([1.0, 1.0, self.max_speed], dtype=np.float32)
         # This will throw a warning in tests/envs/test_envs in utils/env_checker.py as the space is not symmetric
         #   or normalised as max_torque == 2 by default. Ignoring the issue here as the default settings are too old
         #   to update to follow the openai gym api
@@ -118,7 +118,7 @@ class PendulumEnv(gym.Env):
         self.observation_space = gym.spaces.Box(low=-high, high=high, dtype=np.float32)
 
     def step(self, u):
-        u = u[0]
+        # u = u[0]
         th, thdot = self.state  # th := theta
 
         g = self.g
@@ -135,7 +135,7 @@ class PendulumEnv(gym.Env):
         newthdot = np.clip(newthdot, -self.max_speed, self.max_speed)
         newth = th + newthdot * dt
 
-        self.state = np.array([newth, newthdot])
+        self.state = np.array([cos(newth), sin(newth), newthdot])
 
         if self.render_mode == "human":
             self.render()
@@ -166,8 +166,6 @@ class PendulumEnv(gym.Env):
     
     def _get_obs(self):
         return self.state
-        # theta, thetadot = self.state
-        # return np.array([np.cos(theta), np.sin(theta), thetadot], dtype=np.float32)
 
     def render(self):
         if self.render_mode is None:
