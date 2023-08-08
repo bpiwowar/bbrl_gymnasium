@@ -135,7 +135,7 @@ class PendulumEnv(gym.Env):
         newthdot = np.clip(newthdot, -self.max_speed, self.max_speed)
         newth = th + newthdot * dt
 
-        self.state = np.array([cos(newth), sin(newth), newthdot])
+        self.state = np.array([newth, newthdot])
 
         if self.render_mode == "human":
             self.render()
@@ -165,7 +165,8 @@ class PendulumEnv(gym.Env):
         return np.array([np.random.uniform(-2*np.pi, 2*np.pi), np.random.uniform(-self.max_speed, self.max_speed)])
     
     def _get_obs(self):
-        return self.state
+        th, thdot = self.state
+        return np.array([np.cos(th), np.sin(the), thedot], dtype=np.float32)
 
     def render(self):
         if self.render_mode is None:
