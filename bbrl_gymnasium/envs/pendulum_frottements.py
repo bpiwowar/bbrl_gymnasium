@@ -4,7 +4,10 @@ from gymnasium.envs.registration import register
 import numpy as np
 from typing import Any, Callable, List, Optional, Set
 from os import path
-from utils.utils import angle_normalize
+
+def angle_normalize(x):
+    return ((x + np.pi) % (2 * np.pi)) - np.pi
+
 
 DEFAULT_X = np.pi
 DEFAULT_Y = 1.0
