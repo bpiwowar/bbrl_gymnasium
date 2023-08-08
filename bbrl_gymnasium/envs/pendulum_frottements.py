@@ -277,9 +277,3 @@ class PendulumEnv(gym.Env):
 
 def angle_normalize(x):
     return ((x + np.pi) % (2 * np.pi)) - np.pi
-
-register(
-    id='GymPendulum',
-    entry_point='env.GymPendulum:PendulumEnv',
-    max_episode_steps=1000,
-)
