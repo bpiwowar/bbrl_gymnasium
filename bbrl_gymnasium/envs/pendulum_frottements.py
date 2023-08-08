@@ -108,7 +108,7 @@ class PendulumEnv(gym.Env):
         self.clock = None
         self.isopen = True
 
-        high = np.array([1.0, 1.0, self.max_speed], dtype=np.float32)
+        high = np.array([np.pi, self.max_speed], dtype=np.float32)
         # This will throw a warning in tests/envs/test_envs in utils/env_checker.py as the space is not symmetric
         #   or normalised as max_torque == 2 by default. Ignoring the issue here as the default settings are too old
         #   to update to follow the openai gym api
