@@ -52,3 +52,13 @@ register(
     entry_point="bbrl_gymnasium.envs:PendulumEnv",
     max_episode_steps=200
 )
+register(
+    id="CartPolePixelsEnv-v0",
+    entry_point="bbrl_gymnasium.envs:CartPolePixelsEnv",
+    max_episode_steps=200
+)
+register(
+    id="CartPolePixelsEnv-v1",
+    entry_point="bbrl_gymnasium.envs:CartPolePixelsEnv",
+    max_episode_steps=500
+)

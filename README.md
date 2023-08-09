@@ -9,6 +9,8 @@ So far, it contains the following environments:
 - LineMDPContinuous-v0, a simple discrete action MDP
 - 2DMDPContinuous-v0, a discrete action MDP with 2D state
 - PendulumEnv-v0, a version of the Pendulum environment with friction
+- CartPolePixelsEnv-v0, a version of CartPole controlled from pixels, with time limit 200
+- CartPolePixelsEnv-v1, a version of CartPole controlled from pixels, with time limit 500
 
 
 ## Installation
