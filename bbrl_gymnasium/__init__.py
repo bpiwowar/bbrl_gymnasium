@@ -11,8 +11,11 @@ register(
     entry_point="bbrl_gymnasium.envs:ContinuousCartPoleEnv",
     max_episode_steps=500,
 )
-
-register(id="LineMDP-v0", entry_point="bbrl_gymnasium.envs:LineMDPEnv", max_episode_steps=100)
+register(
+    id="LineMDP-v0",
+    entry_point="bbrl_gymnasium.envs:LineMDPEnv",
+    max_episode_steps=100
+)
 register(
     id="LineMDPContinuous-v0",
     entry_point="bbrl_gymnasium.envs:ContinuousLineMDPEnv",
