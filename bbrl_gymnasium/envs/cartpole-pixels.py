@@ -19,7 +19,7 @@ from gymnasium.envs.classic_control import utils
 from gymnasium.error import DependencyNotInstalled
 
 
-class CartPoleEnv(gym.Env[np.ndarray, int | np.ndarray]):
+class CartPolePixelsEnv(gym.Env[np.ndarray, int | np.ndarray]):
     """
     ## Description
 
