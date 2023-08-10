@@ -195,8 +195,8 @@ class CartPolePixelsEnv(gym.Env[np.ndarray, Union[int, np.ndarray]]):
     def reset(
         self,
         *,
-        seed: int | None = None,
-        options: dict | None = None,
+        seed: Union[int, None] = None,
+        options: Union[dict, None] = None,
     ):
         super().reset(seed=seed)
         # Note that if you use custom reset bounds, it may lead to out-of-bound
