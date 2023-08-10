@@ -91,7 +91,7 @@ class CartPolePixelsEnv(gym.Env[np.ndarray, Union[int, np.ndarray]]):
         "render_fps": 50,
     }
 
-    def __init__(self, render_mode: str | None = None):
+    def __init__(self, render_mode: Union[str, None] = None):
         self.gravity = 9.8
         self.masscart = 1.0
         self.masspole = 0.1
