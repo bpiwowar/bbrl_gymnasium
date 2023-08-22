@@ -24,12 +24,9 @@ class ContinuousCartPoleEnv(CartPoleEnv):
 
     def step(self, action):
         if action > self.max_action:
-            action = self.max_action
-        if action < self.min_action:
-            action = self.min_action
-        assert self.action_space.contains(
-            action
-        ), f"{action[0]} ({type(action[0])}) invalid for {self.action_space}"
+            action = np.array(self.max_action)
+        elif action < self.min_action:
+            action = np.array(self.min_action)
         assert self.state is not None, "Call reset before using step method."
 
         x, x_dot, theta, theta_dot = self.state
