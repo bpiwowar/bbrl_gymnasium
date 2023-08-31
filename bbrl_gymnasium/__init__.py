@@ -63,7 +63,7 @@ register(
     max_episode_steps=500
 )
 register(
-    id="SwimmerEnv-v0",
+    id="SwimmerBBRLEnv-v0",
     entry_point="bbrl_gymnasium.envs:SwimmerBBRLEnv",
     max_episode_steps=400
 )
