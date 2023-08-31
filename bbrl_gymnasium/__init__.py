@@ -62,3 +62,8 @@ register(
     entry_point="bbrl_gymnasium.envs:CartPolePixelsEnv",
     max_episode_steps=500
 )
+register(
+    id="SwimmerEnv-v0",
+    entry_point="bbrl_gymnasium.envs:SwimmerEnv",
+    max_episode_steps=400
+)
