@@ -64,6 +64,6 @@ register(
 )
 register(
     id="SwimmerEnv-v0",
-    entry_point="bbrl_gymnasium.envs:SwimmerEnv",
+    entry_point="bbrl_gymnasium.envs:SwimmerBBRLEnv",
     max_episode_steps=400
 )

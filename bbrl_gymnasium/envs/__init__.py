@@ -8,4 +8,4 @@ from bbrl_gymnasium.envs.debug_env import DebugVEnv
 from bbrl_gymnasium.envs.single_state_mdp import SingleStateMDP
 from bbrl_gymnasium.envs.pendulum_frottements import PendulumEnv
 from bbrl_gymnasium.envs.cartpole_pixels import CartPolePixelsEnv
-from bbrl_gymnasium.envs.swimmer import SwimmerEnv
+from bbrl_gymnasium.envs.swimmer import SwimmerBBRLEnv
