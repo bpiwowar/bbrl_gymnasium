@@ -9,10 +9,5 @@ setup(
     author="Olivier Sigaud",
     author_email="Olivier.Sigaud@isir.upmc.fr",
     license="MIT",
-    description="A set of additional gym environments",
-    long_description=open("README.md").read(),
-    long_description_content_type='text/markdown',
     install_requires=open("requirements.txt", "r").read().splitlines(),
-    use_scm_version=True,
-    setup_requires=['setuptools_scm'],
 )

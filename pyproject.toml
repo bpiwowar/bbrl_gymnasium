@@ -1,5 +1,7 @@
 [project]
 name ="bbrl_gymnasium"
+description = "A set of additional gym environments"
+readme = {file = "README.md", content-type = "text/markdown"}
 dynamic = ["version"]
 
 [tool.setuptools_scm]
