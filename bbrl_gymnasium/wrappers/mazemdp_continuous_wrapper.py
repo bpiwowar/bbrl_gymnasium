@@ -32,7 +32,10 @@ class MazeMDPContinuousWrapper(gym.Wrapper):
         # By contrast with the wrapped environment where the state space is discrete
         return True
 
-    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
+    # def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
+    #    return self.env.reset(), {}
+
+    def reset(self):
         return self.env.reset(), {}
 
     def step(self, action):
