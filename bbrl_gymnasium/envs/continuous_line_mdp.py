@@ -56,14 +56,14 @@ class ContinuousLineMDPEnv(gym.Env):
                     "any further steps are undefined behavior."
                 )
                 self.steps_beyond_done += 1
-        next_state = np.array([self.state])
+        next_state = np.array([self.state], dtype=np.float32)
         return next_state, reward, done, False, {}
 
     def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
 
         self.state = 0.4
         self.steps_beyond_done = None
-        return np.array([self.state]), {}
+        return np.array([self.state], dtype=np.float32), {}
 
     def render(self, mode="human", close=False):
         if close:
