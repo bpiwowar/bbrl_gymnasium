@@ -1,8 +1,9 @@
 [project]
 name ="bbrl_gymnasium"
 description = "A set of additional gym environments"
-readme = {file = "README.md", content-type = "text/markdown"}
+license = {text = "MIT"}
 dynamic = ["version"]
+readme = {file = "README.md", content-type = "text/markdown"}
 
 [tool.setuptools_scm]
 write_to = "bbrl_gymnasium/_version.py"
