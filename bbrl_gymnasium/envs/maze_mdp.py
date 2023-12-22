@@ -82,6 +82,10 @@ class MazeMDPEnv(gym.Env):
             return r
         return self.mdp.reset(**kwargs), {}
 
+    def sample_transition(self, **kwargs):
+        state, action, next_state = self.mdp.sample_transition(**kwargs)
+        return state, action, next_state
+
     def _draw(self, recorder, callable, *args, **kwargs):
         """Draw and record 
 
