@@ -53,6 +53,7 @@ class MazeMDPEnv(gym.Env):
         self.P = self.mdp.P
         self.gamma = self.mdp.gamma
         self.r = self.mdp.r
+        self.state = self.mdp.current_state # should not be used for learning (reset-anywhere property)
 
         self.seed()
         self.np_random = None
