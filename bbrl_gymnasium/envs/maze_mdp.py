@@ -74,8 +74,8 @@ class MazeMDPEnv(gym.Env):
         return [seed]
 
     def step(self, action):
-        next_state, reward, done, info = self.mdp.step(action)
-        return next_state, reward, done, False, info
+        next_state, reward, terminated, info = self.mdp.step(action)
+        return next_state, reward, terminated, False, info
 
     def reset(self, **kwargs):
         r = self.mdp.reset(**kwargs)
