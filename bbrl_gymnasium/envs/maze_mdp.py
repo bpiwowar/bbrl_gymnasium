@@ -36,13 +36,24 @@ class MazeMDPEnv(gym.Env):
                 hit = kwargs["hit"]
             if "walls" not in kwargs.keys():
                 ratio = kwargs["ratio"]
-                self.mdp, nb_states, coord_x, coord_y = create_random_maze(
-                    width, height, ratio, hit
+                if "terminal_states" not in kwargs.keys():
+                    self.mdp, nb_states, coord_x, coord_y = create_random_maze(
+                        width, height, ratio, hit
+                else:
+                    print("warning: one should not set terminal states in a random maze as the final state might contain a wall")   
+                    self.mdp, nb_states, coord_x, coord_y = create_random_maze(
+                        width, height, ratio, hit
+                    self.mdp.terminal_states = kwargs["terminal_states"]
                 )
             else:
-                self.mdp, nb_states, coord_x, coord_y = build_maze(
-                    width, height, kwargs["walls"], hit
-                )
+                if "terminal_states" not in kwargs.keys():
+                    self.mdp, nb_states, coord_x, coord_y = build_maze(
+                        width, height, kwargs["walls"], hit
+                    )
+                else:
+                    self.mdp, nb_states, coord_x, coord_y = build_custom_maze(
+                        width, height, kwargs["walls"], kwargs["terminal_states"], hit
+                        )
 
         self.nb_states = nb_states
         self.coord_x = coord_x
