@@ -54,9 +54,23 @@ class MazeMDPEnv(gym.Env):
                         width, height, kwargs["walls"], hit
                     )
                 else:
-                    self.mdp, nb_states, coord_x, coord_y = build_custom_maze(
-                        width, height, kwargs["walls"], kwargs["terminal_states"], hit
-                    )
+                    if "start_states" not in kwargs.keys():
+                        self.mdp, nb_states, coord_x, coord_y = build_custom_maze(
+                            width,
+                            height,
+                            kwargs["walls"],
+                            kwargs["terminal_states"],
+                            hit,
+                        )
+                    else:
+                        self.mdp, nb_states, coord_x, coord_y = build_custom_maze(
+                            width,
+                            height,
+                            kwargs["start_states"],
+                            kwargs["walls"],
+                            kwargs["terminal_states"],
+                            hit,
+                        )
 
         self.nb_states = nb_states
         self.coord_x = coord_x
