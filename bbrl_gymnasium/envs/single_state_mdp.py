@@ -44,7 +44,9 @@ class SingleStateMDP(gym.Env):
         self.np_random, seed = seeding.np_random(seed)
         return [seed]
 
-    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
+    def reset(
+        self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
+    ):
         self.state = np.zeros(1, dtype=np.float64)
         return self.state, {}
 

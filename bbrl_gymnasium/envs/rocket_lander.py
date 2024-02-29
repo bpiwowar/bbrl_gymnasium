@@ -174,8 +174,9 @@ class RocketLanderEnv(gym.Env):
         self.world.DestroyBody(self.containers[1])
         self.containers = []
 
-    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
-
+    def reset(
+        self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
+    ):
         self._destroy()
         self.world.contactListener_keepref = ContactDetector(self)
         self.world.contactListener = self.world.contactListener_keepref
@@ -362,7 +363,6 @@ class RocketLanderEnv(gym.Env):
             return self.step(6)[0], {}
 
     def set_force_and_throttle(self, action):
-
         self.force_dir = 0
 
         if CONTINUOUS:
@@ -388,7 +388,6 @@ class RocketLanderEnv(gym.Env):
                 self.force_dir = 1
 
     def step(self, action):
-
         self.set_force_and_throttle(action)
 
         self.gimbal = np.clip(self.gimbal, -GIMBAL_THRESHOLD, GIMBAL_THRESHOLD)
@@ -500,7 +499,6 @@ class RocketLanderEnv(gym.Env):
         from gymnasium.envs.classic_control import rendering
 
         if self.viewer is None:
-
             self.viewer = rendering.Viewer(VIEWPORT_W, VIEWPORT_H)
             self.viewer.set_bounds(0, W, 0, H)
 

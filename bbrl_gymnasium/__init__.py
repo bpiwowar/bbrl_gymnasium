@@ -12,9 +12,7 @@ register(
     max_episode_steps=500,
 )
 register(
-    id="LineMDP-v0",
-    entry_point="bbrl_gymnasium.envs:LineMDPEnv",
-    max_episode_steps=100
+    id="LineMDP-v0", entry_point="bbrl_gymnasium.envs:LineMDPEnv", max_episode_steps=100
 )
 register(
     id="LineMDPContinuous-v0",
@@ -35,35 +33,33 @@ register(
 register(
     id="MazeMDP-v0",
     entry_point="bbrl_gymnasium.envs:MazeMDPEnv",
-    max_episode_steps=1000
+    max_episode_steps=1000,
 )
 register(
-    id="DebugV-v0",
-    entry_point="bbrl_gymnasium.envs:DebugVEnv",
-    max_episode_steps=10
+    id="DebugV-v0", entry_point="bbrl_gymnasium.envs:DebugVEnv", max_episode_steps=10
 )
 register(
     id="SingleStateMDP-v0",
     entry_point="bbrl_gymnasium.envs:SingleStateMDP",
-    max_episode_steps=3000
+    max_episode_steps=3000,
 )
 register(
     id="PendulumEnv-v0",
     entry_point="bbrl_gymnasium.envs:PendulumEnv",
-    max_episode_steps=200
+    max_episode_steps=200,
 )
 register(
     id="CartPolePixelsEnv-v0",
     entry_point="bbrl_gymnasium.envs:CartPolePixelsEnv",
-    max_episode_steps=200
+    max_episode_steps=200,
 )
 register(
     id="CartPolePixelsEnv-v1",
     entry_point="bbrl_gymnasium.envs:CartPolePixelsEnv",
-    max_episode_steps=500
+    max_episode_steps=500,
 )
 register(
     id="SwimmerBBRLEnv-v0",
     entry_point="bbrl_gymnasium.envs:SwimmerBBRLEnv",
-    max_episode_steps=400
+    max_episode_steps=400,
 )

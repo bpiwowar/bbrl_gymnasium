@@ -42,8 +42,9 @@ class DebugVEnv(gym.Env):
         next_state = np.array([self.state])
         return next_state, reward, done, False, {}
 
-    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
-
+    def reset(
+        self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
+    ):
         self.state = 0.01
         return np.array([self.state]), {}
 

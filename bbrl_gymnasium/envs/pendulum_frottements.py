@@ -5,6 +5,7 @@ import numpy as np
 from typing import Any, Callable, List, Optional, Set
 from os import path
 
+
 def angle_normalize(x):
     return ((x + np.pi) % (2 * np.pi)) - np.pi
 
@@ -98,8 +99,8 @@ class PendulumEnv(gym.Env):
         self.dt = 0.05
         self.g = g
         self.m = 1.0
-        self.l = 1.0
-        self.eta = .5 if friction else 0
+        self.length = 1.0
+        self.eta = 0.5 if friction else 0
 
         self.render_mode = render_mode
 
@@ -123,15 +124,23 @@ class PendulumEnv(gym.Env):
 
         g = self.g
         m = self.m
-        l = self.l
-        f = - self.eta / (self.m * self.l**2)
+        length = self.length
+        f = -self.eta / (self.m * self.length**2)
         dt = self.dt
 
         u = np.clip(u, -self.max_torque, self.max_torque)[0]
         self.last_u = u  # for rendering
         costs = angle_normalize(th) ** 2 + 0.1 * thdot**2 + 0.001 * (u**2)
 
-        newthdot = thdot + (3 * g / (2 * l) * np.sin(th) + 3.0 / (m * l**2) * u + f * thdot) * dt
+        newthdot = (
+            thdot
+            + (
+                3 * g / (2 * length) * np.sin(th)
+                + 3.0 / (m * length**2) * u
+                + f * thdot
+            )
+            * dt
+        )
         newthdot = np.clip(newthdot, -self.max_speed, self.max_speed)
         newth = th + newthdot * dt
 
@@ -162,8 +171,13 @@ class PendulumEnv(gym.Env):
         return self._get_obs(), {}
 
     def get_random_state(self):
-        return np.array([np.random.uniform(-2*np.pi, 2*np.pi), np.random.uniform(-self.max_speed, self.max_speed)])
-    
+        return np.array(
+            [
+                np.random.uniform(-2 * np.pi, 2 * np.pi),
+                np.random.uniform(-self.max_speed, self.max_speed),
+            ]
+        )
+
     def _get_obs(self):
         th, thdot = self.state
         return np.array([np.cos(th), np.sin(th), thdot], dtype=np.float32)
@@ -181,7 +195,7 @@ class PendulumEnv(gym.Env):
             import pygame
             from pygame import gfxdraw
         except ImportError:
-            raise DependencyNotInstalled(
+            raise gym.error.DependencyNotInstalled(
                 "pygame is not installed, run `pip install gym[classic_control]`"
             )
 
@@ -273,7 +287,4 @@ class PendulumEnv(gym.Env):
             self.isopen = False
 
     def seed(self, seed):
-        self.seed=seed
-
-def angle_normalize(x):
-    return ((x + np.pi) % (2 * np.pi)) - np.pi
+        self.seed = seed

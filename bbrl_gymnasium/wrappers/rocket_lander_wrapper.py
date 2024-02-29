@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Any, Dict
 import gymnasium as gym
 
 
@@ -11,8 +11,9 @@ class RocketLanderWrapper(gym.Wrapper):
         super().__init__(env)
         self.prev_shaping = None
 
-    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
-
+    def reset(
+        self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
+    ):
         self.prev_shaping = None
         return self.env.reset(), {}
 

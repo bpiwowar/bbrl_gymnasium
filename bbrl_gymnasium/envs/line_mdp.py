@@ -58,8 +58,9 @@ class LineMDPEnv(gym.Env):
         next_state = self.state
         return next_state, reward, done, False, {}
 
-    def reset(self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None):
-
+    def reset(
+        self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
+    ):
         self.state = min(2, self.nb_states - 1)
         self.steps_beyond_done = None
         return self.state, {}

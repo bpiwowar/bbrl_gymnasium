@@ -11,7 +11,7 @@ from gymnasium import spaces
 from gymnasium.utils import seeding
 
 from mazemdp import create_random_maze
-from mazemdp.maze import build_maze
+from mazemdp.maze import build_maze, build_custom_maze
 
 logger = logging.getLogger(__name__)
 
@@ -39,14 +39,15 @@ class MazeMDPEnv(gym.Env):
                 if "terminal_states" not in kwargs.keys():
                     self.mdp, nb_states, coord_x, coord_y = create_random_maze(
                         width, height, ratio, hit
-                        )
+                    )
                 else:
-                    print("warning: one should not set terminal states in a random maze as the final state might contain a wall")   
+                    print(
+                        "warning: one should not set terminal states in a random maze as the final state might contain a wall"
+                    )
                     self.mdp, nb_states, coord_x, coord_y = create_random_maze(
                         width, height, ratio, hit
-                        )
+                    )
                     self.mdp.terminal_states = kwargs["terminal_states"]
-                )
             else:
                 if "terminal_states" not in kwargs.keys():
                     self.mdp, nb_states, coord_x, coord_y = build_maze(
@@ -55,7 +56,7 @@ class MazeMDPEnv(gym.Env):
                 else:
                     self.mdp, nb_states, coord_x, coord_y = build_custom_maze(
                         width, height, kwargs["walls"], kwargs["terminal_states"], hit
-                        )
+                    )
 
         self.nb_states = nb_states
         self.coord_x = coord_x
@@ -66,7 +67,9 @@ class MazeMDPEnv(gym.Env):
         self.P = self.mdp.P
         self.gamma = self.mdp.gamma
         self.r = self.mdp.r
-        self.state = self.mdp.current_state # should not be used for learning (reset-anywhere property)
+        self.state = (
+            self.mdp.current_state
+        )  # should not be used for learning (reset-anywhere property)
 
         self.seed()
         self.np_random = None
@@ -101,7 +104,7 @@ class MazeMDPEnv(gym.Env):
         return state, action, next_state
 
     def _draw(self, recorder, callable, *args, **kwargs):
-        """Draw and record 
+        """Draw and record
 
         :param recorder: A video recorder (or None)
         """
@@ -113,8 +116,12 @@ class MazeMDPEnv(gym.Env):
             return callable(*args, **kwargs)
 
     # Drawing functions
-    def draw_v_pi_a(self, v, policy, agent_pos, title="MDP studies", mode="legacy", recorder=None):
-        return self._draw(recorder, self.render, v, policy, agent_pos, title=title, mode=mode)
+    def draw_v_pi_a(
+        self, v, policy, agent_pos, title="MDP studies", mode="legacy", recorder=None
+    ):
+        return self._draw(
+            recorder, self.render, v, policy, agent_pos, title=title, mode=mode
+        )
 
     def draw_v_pi(self, v, policy, title="MDP studies", mode="legacy", recorder=None):
         return self._draw(recorder, self.mdp.render, v, policy, None, title, mode=mode)
@@ -123,7 +130,9 @@ class MazeMDPEnv(gym.Env):
         return self._draw(recorder, self.mdp.render, v, None, None, title, mode=mode)
 
     def draw_pi(self, policy, title="MDP studies", mode="legacy", recorder=None):
-        return self._draw(recorder, self.mdp.render, None, policy, None, title, mode=mode)
+        return self._draw(
+            recorder, self.mdp.render, None, policy, None, title, mode=mode
+        )
 
     def init_draw(self, title, mode="legacy", recorder=None):
         return self._draw(recorder, self.mdp.new_render, title, mode=mode)
