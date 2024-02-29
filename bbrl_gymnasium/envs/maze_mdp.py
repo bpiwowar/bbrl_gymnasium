@@ -44,6 +44,7 @@ class MazeMDPEnv(gym.Env):
                     print("warning: one should not set terminal states in a random maze as the final state might contain a wall")   
                     self.mdp, nb_states, coord_x, coord_y = create_random_maze(
                         width, height, ratio, hit
+                        )
                     self.mdp.terminal_states = kwargs["terminal_states"]
                 )
             else:
