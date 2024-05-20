@@ -130,26 +130,20 @@ class MazeMDPEnv(gym.Env):
             return callable(*args, **kwargs)
 
     # Drawing functions
-    def draw_v_pi_a(
-        self, v, policy, agent_pos, title="MDP studies", mode="legacy", recorder=None
-    ):
-        return self._draw(
-            recorder, self.render, v, policy, agent_pos, title=title, mode=mode
-        )
+    def draw_v_pi_a(self, v, policy, agent_pos, title="MDP studies", recorder=None):
+        return self._draw(recorder, self.render, v, policy, agent_pos, title=title, mode=self.render_mode)
 
-    def draw_v_pi(self, v, policy, title="MDP studies", mode="legacy", recorder=None):
-        return self._draw(recorder, self.mdp.render, v, policy, None, title, mode=mode)
+    def draw_v_pi(self, v, policy, title="MDP studies", recorder=None):
+        return self._draw(recorder, self.mdp.render, v, policy, None, title, mode=self.render_mode)
 
-    def draw_v(self, v, mode="legacy", title="MDP studies", recorder=None):
-        return self._draw(recorder, self.mdp.render, v, None, None, title, mode=mode)
+    def draw_v(self, v, title="MDP studies", recorder=None):
+        return self._draw(recorder, self.mdp.render, v, None, None, title, mode=self.render_mode)
 
-    def draw_pi(self, policy, title="MDP studies", mode="legacy", recorder=None):
-        return self._draw(
-            recorder, self.mdp.render, None, policy, None, title, mode=mode
-        )
+    def draw_pi(self, policy, title="MDP studies", recorder=None):
+        return self._draw(recorder, self.mdp.render, None, policy, None, title, mode=self.render_mode)
 
-    def init_draw(self, title, mode="legacy", recorder=None):
-        return self._draw(recorder, self.mdp.new_render, title, mode=mode)
+    def init_draw(self, title, recorder=None):
+        return self._draw(recorder, self.mdp.new_render, title, mode=self.render_mode)
 
     def render(self):
         return self.render_func(mode=self.render_mode)
