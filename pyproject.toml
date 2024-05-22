@@ -1,12 +1,17 @@
 [project]
-name ="bbrl_gymnasium"
+name = "bbrl_gymnasium"
 description = "A set of additional gym environments"
-license = {text = "MIT"}
+license = { text = "MIT" }
 dynamic = ["version"]
-readme = {file = "README.md", content-type = "text/markdown"}
+readme = { file = "README.md", content-type = "text/markdown" }
+authors = [{ name = "Olivier Sigaud", email = "olivier.sigaud@isir.upmc.fr" }]
+dependencies = ["numpy>=1.19.1", "gymnasium", "gymnasium[box2d]", "mazemdp"]
+
+[project.urls]
+Repository = "https://github.com/osigaud/bbrl_gym"
 
 [tool.setuptools_scm]
-write_to = "bbrl_gymnasium/_version.py"
+write_to = "src/bbrl_gymnasium/_version.py"
 
 [build-system]
 requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
