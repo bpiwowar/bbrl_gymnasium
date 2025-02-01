@@ -36,41 +36,36 @@ class MazeMDPEnv(gym.Env):
                 hit = kwargs["hit"]
             if "walls" not in kwargs.keys():
                 ratio = kwargs["ratio"]
-                if "terminal_states" not in kwargs.keys():
-                    self.mdp, nb_states, coord_x, coord_y = create_random_maze(
-                        width, height, ratio, hit
-                    )
-                else:
+                walls = None
+            else:
+                ratio = None
+                walls = kwargs["walls"]
+            if "terminal_states" in kwargs.keys():
+                terminal_states = kwargs["terminal_states"]
+                if walls is None:
                     print(
                         "warning: one should not set terminal states in a random maze as the final state might contain a wall"
                     )
-                    self.mdp, nb_states, coord_x, coord_y = create_random_maze(
-                        width, height, ratio, hit
-                    )
-                    self.mdp.terminal_states = kwargs["terminal_states"]
             else:
-                if "terminal_states" not in kwargs.keys():
-                    self.mdp, nb_states, coord_x, coord_y = build_maze(
-                        width, height, kwargs["walls"], hit
-                    )
-                else:
-                    if "start_states" not in kwargs.keys():
-                        self.mdp, nb_states, coord_x, coord_y = build_custom_maze(
-                            width,
-                            height,
-                            kwargs["walls"],
-                            kwargs["terminal_states"],
-                            hit,
-                        )
-                    else:
-                        self.mdp, nb_states, coord_x, coord_y = build_custom_maze(
-                            width,
-                            height,
-                            kwargs["start_states"],
-                            kwargs["walls"],
-                            kwargs["terminal_states"],
-                            hit,
-                        )
+                terminal_states = None
+            if "start_states" not in kwargs.keys():
+                start_states = kwargs["start_states"]
+            else:
+                start_states = None
+
+            if walls is None:
+                self.mdp, nb_states, coord_x, coord_y = create_random_maze(
+                    width, height, hit, ratio=ratio, start_states=start_states
+                )
+            else:
+                self.mdp, nb_states, coord_x, coord_y = build_custom_maze(
+                    width,
+                    height,
+                    hit,
+                    walls=walls,
+                    terminal_states=terminal_states,
+                    start_states=start_states,
+                )
 
         self.nb_states = nb_states
         self.coord_x = coord_x
@@ -131,16 +126,30 @@ class MazeMDPEnv(gym.Env):
 
     # Drawing functions
     def draw_v_pi_a(self, v, policy, agent_pos, title="MDP studies", recorder=None):
-        return self._draw(recorder, self.render, v, policy, agent_pos, title=title, mode=self.render_mode)
+        return self._draw(
+            recorder,
+            self.render,
+            v,
+            policy,
+            agent_pos,
+            title=title,
+            mode=self.render_mode,
+        )
 
     def draw_v_pi(self, v, policy, title="MDP studies", recorder=None):
-        return self._draw(recorder, self.mdp.render, v, policy, None, title, mode=self.render_mode)
+        return self._draw(
+            recorder, self.mdp.render, v, policy, None, title, mode=self.render_mode
+        )
 
     def draw_v(self, v, title="MDP studies", recorder=None):
-        return self._draw(recorder, self.mdp.render, v, None, None, title, mode=self.render_mode)
+        return self._draw(
+            recorder, self.mdp.render, v, None, None, title, mode=self.render_mode
+        )
 
     def draw_pi(self, policy, title="MDP studies", recorder=None):
-        return self._draw(recorder, self.mdp.render, None, policy, None, title, mode=self.render_mode)
+        return self._draw(
+            recorder, self.mdp.render, None, policy, None, title, mode=self.render_mode
+        )
 
     def init_draw(self, title, recorder=None):
         return self._draw(recorder, self.mdp.new_render, title, mode=self.render_mode)
