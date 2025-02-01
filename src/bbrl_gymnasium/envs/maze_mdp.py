@@ -48,7 +48,7 @@ class MazeMDPEnv(gym.Env):
                     )
             else:
                 terminal_states = None
-            if "start_states" not in kwargs.keys():
+            if "start_states" in kwargs.keys():
                 start_states = kwargs["start_states"]
             else:
                 start_states = None
