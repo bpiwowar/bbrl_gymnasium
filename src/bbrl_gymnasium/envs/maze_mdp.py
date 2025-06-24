@@ -2,12 +2,14 @@
 Simple Maze MDP
 """
 
+from __future__ import annotations
 from functools import partial
 import logging
-from typing import Callable
+from typing import Any, Callable
 
 import gymnasium as gym
 from gymnasium import spaces
+from gymnasium.core import ObsType
 from gymnasium.utils import seeding
 
 from mazemdp import create_random_maze
@@ -17,7 +19,8 @@ logger = logging.getLogger(__name__)
 
 
 class MazeMDPEnv(gym.Env):
-    metadata = {"render_modes": ["rgb_array", "human"], "video.frames_per_second": 5}
+    metadata = {"render_modes": ["rgb_array",
+                                 "human"], "video.frames_per_second": 5}
 
     def __init__(self, render_mode=None, **kwargs):
         self.render_mode = render_mode
@@ -25,7 +28,8 @@ class MazeMDPEnv(gym.Env):
         if kwargs == {}:
             width = 10
             height = 10
-            self.mdp, nb_states, coord_x, coord_y = create_random_maze(10, 10, 0.2)
+            self.mdp, nb_states, coord_x, coord_y = create_random_maze(10, 10, 0.2, [
+                                                                       0])
         else:
             kwargs = kwargs["kwargs"]
             width = kwargs["width"]
@@ -102,11 +106,19 @@ class MazeMDPEnv(gym.Env):
         next_state, reward, terminated, truncated, info = self.mdp.step(action)
         return next_state, reward, terminated, truncated, info
 
-    def reset(self, **kwargs):
-        r = self.mdp.reset(**kwargs)
+    def reset(
+        self,
+        *,
+        seed: int | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> tuple[ObsType, dict[str, Any]]:
+        options = options or {}
+        
+        r = self.mdp.reset(**options)
         if isinstance(r, list):
             return r
-        return self.mdp.reset(**kwargs), {}
+
+        return self.mdp.reset(**options), {}
 
     def sample_transition(self, **kwargs):
         state, action, next_state = self.mdp.sample_transition(**kwargs)

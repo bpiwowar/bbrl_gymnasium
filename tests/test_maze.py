@@ -28,15 +28,17 @@ def get_policy_from_v(mdp: MazeMDPEnv, v: np.ndarray) -> np.ndarray:
 
 # ------------------------- Value Iteration with the V function ----------------------------#
 def value_iteration_v(mdp: MazeMDPEnv, render: bool) -> Tuple[np.ndarray, List[float]]:
+    _mdp = mdp.unwrapped
+    
     # Value Iteration using the state value v
-    v = np.zeros(mdp.nb_states)  # initial state values are set to 0
+    v = np.zeros(_mdp.nb_states)  # initial state values are set to 0
     v_list = []
     stop = False
 
     while not stop:
         v_old = v.copy()
         if render:
-            mdp.draw_v(v, title="Value iteration V", mode="rgb_array")
+            _mdp.draw_v(v, title="Value iteration V", mode="rgb_array")
 
         for x in range(mdp.nb_states):  # for each state x
             # Compute the value of the state x for each action u of the MDP action space
